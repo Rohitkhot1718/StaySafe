@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StaySafe App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .safety-card {
+        transition: all 0.3s ease;
+      }
+      .safety-card:hover {
+        transform: translateY(-5px);
+      }
+      .pulse-animation {
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.6;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen flex items-center justify-center p-4"
+  >
+    <div class="max-w-md w-full">
+      <div class="text-center mb-6">
+        <h1
+          class="text-4xl font-bold text-blue-800 flex items-center justify-center gap-3"
+        >
+          <i class="fas fa-shield-alt"></i> StaySafe
+        </h1>
+        <p class="text-blue-600 mt-2">Your personal safety companion</p>
+      </div>
+
+      <div
+        class="bg-white/90 backdrop-blur-sm shadow-xl rounded-2xl overflow-hidden transition-all duration-300"
+      >
+        <div
+          id="statusBar"
+          class="bg-gradient-to-r from-blue-500 to-blue-600 p-3 text-white font-medium flex items-center justify-between"
+        >
+          <div class="flex items-center gap-2">
+            <i class="fas fa-sync-alt fa-spin"></i>
+            <span>Updating...</span>
+          </div>
+          <div id="lastChecked" class="text-sm font-normal">Just now</div>
+        </div>
+
+        <div class="p-6 space-y-6">
+          <div
+            class="safety-card bg-white p-4 rounded-xl shadow-md border-l-4 border-blue-500"
+          >
+            <div class="flex items-center gap-3">
+              <div class="bg-blue-100 p-3 rounded-full text-blue-600">
+                <i class="fas fa-location-dot"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-500">Location</h3>
+                <p id="location" class="font-medium text-gray-800">
+                  Detecting location...
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="safety-card bg-white p-4 rounded-xl shadow-md border-l-4 border-blue-500"
+          >
+            <div class="flex items-center gap-3">
+              <div class="bg-blue-100 p-3 rounded-full text-blue-600">
+                <i class="fas fa-cloud-sun"></i>
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-500">Weather</h3>
+                <p id="weather" class="font-medium text-gray-800">
+                  Loading weather data...
+                </p>
+              </div>
+            </div>
+            <div class="mt-3 flex justify-center">
+              <canvas id="weatherCanvas" width="120" height="120"></canvas>
+            </div>
+            <!-- <div class="flex justify-center">
+              <i
+                id="weatherIcon"
+                class="fas fa-sun text-4xl text-yellow-500"
+              ></i> -->
+            <!-- </div> -->
+            <div class="grid grid-cols-2 gap-3 mt-3">
+              <div class="bg-blue-50 p-2 rounded-lg text-center">
+                <p class="text-xs text-gray-500">Temperature</p>
+                <p id="temperature" class="font-bold text-blue-700">--°C</p>
+              </div>
+              <div class="bg-blue-50 p-2 rounded-lg text-center">
+                <p class="text-xs text-gray-500">Humidity</p>
+                <p id="humidity" class="font-bold text-blue-700">--%</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div
+              class="safety-card bg-white p-4 rounded-xl shadow-md border-l-4 border-blue-500"
+            >
+              <div class="flex items-center gap-3">
+                <div class="bg-blue-100 p-3 rounded-full text-blue-600">
+                  <i class="fas fa-wifi"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-500">Network</h3>
+                  <p id="network" class="font-medium text-gray-800">
+                    Checking...
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="safetyStatusCard"
+              class="safety-card bg-gradient-to-br from-yellow-100 to-yellow-50 p-4 rounded-xl shadow-md border-l-4 border-yellow-400"
+            >
+              <div class="flex items-center gap-3">
+                <div class="bg-yellow-200 p-3 rounded-full text-yellow-600">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-600">Safety Status</h3>
+                  <p
+                    id="status"
+                    class="font-bold text-yellow-700 pulse-animation"
+                  >
+                    Loading...
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="statusMessage"
+            class="bg-blue-50/50 p-4 rounded-xl text-center text-sm text-gray-700"
+          >
+            <i class="fas fa-info-circle mr-2 text-blue-500"></i>
+            <span>Initializing safety assessment...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-6 text-xs text-gray-500">
+        <p>Data updates every 10 minutes</p>
+        <button
+          id="refreshBtn"
+          class="mt-2 text-blue-600 hover:text-blue-800 font-medium"
+        >
+          <i class="fas fa-sync-alt mr-1"></i> Refresh Now
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
