@@ -16,4 +16,4 @@ A real-time weather safety monitoring application that assesses local conditions
 - Network Information API availability
 - Canvas rendering variations
 
-[Visit StaySafe](https://github.com/Rohitkhot1718/StaySafe)
+[Visit StaySafe](https://rohitkhot1718.github.io/StaySafe/)
