@@ -323,4 +323,17 @@ document.addEventListener("DOMContentLoaded", () => {
         getLocation();
 
         setInterval(getLocation, 10 * 60 * 1000);
+
+        function dismissNote() {
+            const note = document.getElementById('browserNote');
+            note.classList.add('opacity-0');
+            setTimeout(() => note.remove(), 500);
+          }
+
+          setTimeout(dismissNote, 5000);
+        
+          document.addEventListener('click', function() {
+            dismissNote();
+          }, { once: true }); 
+        
       });
